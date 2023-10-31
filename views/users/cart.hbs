@@ -1,0 +1,135 @@
+<style>
+    .container {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+    .cart-table {
+        
+        overflow-y: scroll;
+    }
+    .total-section {
+        background-color: white;
+        padding: 10px;
+        text-align: right;
+        position: fixed;
+        bottom: 0%;
+        width: 81%;
+    }
+</style>
+<section>
+  <div class="container">
+    <table class="table mt-5 cart-table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Item</th>
+          <th scope="col">Title</th>
+          <th scope="col">Price</th>
+          <th scope="col">Quantity</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#if products.length}}
+          {{#each products}}
+            <tr>
+              <td><img
+                  style="width: 80px; height: 80px"
+                  src="/product-images/{{this.id}}.jpg"
+                  alt=""
+                /></td>
+              <td>{{this.name}}</td>
+              <td>Rs.{{this.price}}</td>
+              <td>
+
+                <div class="pt-1 pb-1"><span
+                    class="cart-item-quantity"
+                    id="quantity-{{this.id}}"
+                  >
+                    {{this.quantity}}
+                  </span>
+                </div>
+                <button
+                  class="cart-item-count"
+                  onclick="changeQuantity('{{this.id}}', -1)"
+                  data-product-id="{{this.id}}"
+                  style="height: 25px;width:27px"
+                >-</button>
+                <button
+                  class="cart-item-count"
+                  onclick="changeQuantity('{{this.id}}', 1)"
+                  data-product-id="{{this.id}}"
+                  style="height: 25px;width:27px"
+                >+</button>
+              </td>
+              <td>
+                <button
+                  class="btn btn-danger"
+                  onclick="removeFromCart('{{this.id}}')"
+                  data-product-id="{{this.id}}"
+                >
+                  Remove
+                </button>
+              </td>
+            </tr>
+          {{/each}}
+        {{else}}
+          <tr>
+            <td colspan="5">No items in your cart.</td>
+          </tr>
+        {{/if}}
+      </tbody>
+    </table>
+    
+
+    <div class="float-end total-section">
+        <h5 class="mt-1">Total Amount: <span id="cart-amount">Rs. {{cartAmount}}</span></h5>
+        {{#if products.length}}
+        <a href="/place-order" id="myLink" class=" btn btn-success mt-2">Place Order</a>
+        {{else}}
+        <a href="#" id="myLink" class=" btn btn-success mt-2">Place Order</a>
+        {{/if}}
+    </div>
+  </div>
+</section>
+
+
+<script>
+  function changeQuantity(productId, quantityChange) 
+  { $.ajax({ 
+    url:'/change-cart-item-quantity',
+    method: 'post', 
+    data: { productId,quantityChange }, 
+    success: function (response) 
+            { if (response.success) { 
+                const quantityElement = $(`#quantity-${productId}`);
+                const totalElement = $("#cart-amount");
+                quantityElement.html(response.quantity);
+                totalElement.html(response.total)
+                } 
+            }, 
+            }); 
+    }
+
+
+    function removeFromCart(productId) {
+    const confirmed = confirm('Are you sure you want to remove this item from the cart?');
+    if (confirmed) {
+    $.ajax({
+    url: '/remove-from-cart',
+    method: 'post',
+    data: { productId },
+    success: function (response) {
+      if (response.success) {
+        alert("Cart item removed")
+        location.reload(); // For example, you can reload the page to reflect the updated cart
+      } else {
+        // Handle the case where removal failed
+        console.error('Failed to remove product from cart.');
+      }
+    },
+  });}
+}
+
+    
+</script>

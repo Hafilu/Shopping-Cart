@@ -1,0 +1,81 @@
+<div class="container">
+  <div class="row mt-4">
+    <h3 class="mb-3">Edit Product</h3>
+
+    <form
+      action="/admin/edit-product/{{editProduct.id}}"
+      method="post"
+      enctype="multipart/form-data"
+    >
+      <div class="mb-3">
+        <label for="formGroupExampleInput" class="form-label">Name</label>
+        <input
+          type="text"
+          class="form-control"
+          name="name"
+          id="formGroupExampleInput"
+          value="{{editProduct.name}}"
+          placeholder=""
+        />
+      </div>
+      <div class="mb-3">
+        <label for="formGroupExampleInput2" class="form-label">Category</label>
+        <input
+          type="text"
+          class="form-control"
+          name="category"
+          id="formGroupExampleInput2"
+          value="{{editProduct.category}}"
+          placeholder=""
+        />
+      </div>
+      <div class="mb-3">
+        <label for="formGroupExampleInput2" class="form-label">Price</label>
+        <input
+          type="text"
+          class="form-control"
+          name="price"
+          id="formGroupExampleInput2"
+          value="{{editProduct.price}}"
+          placeholder=""
+        />
+      </div>
+      <div class="mb-3">
+        <label
+          for="formGroupExampleInput2"
+          class="form-label"
+        >Description</label>
+        <input
+          type="text"
+          class="form-control"
+          name="description"
+          id="formGroupExampleInput2"
+          value="{{editProduct.description}}"
+          placeholder=""
+        />
+      </div>
+      <div class="mb-3">
+        
+        <label for="formFile" class="form-label">Image</label>
+        <div>
+         <img
+          style="width: 80px; height: 80px"
+          src="/product-images/{{editProduct.id}}.jpg"
+          id="img"
+        />
+        </div>
+        <input class="form-control" type="file" name="image" id="formFile" onchange="viewImg(event)"/>
+      </div>
+      <div class="mb-3">
+        <button type="submit" class="btn btn-success mb-3">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<script>
+    function viewImg(event){
+        document.getElementById("img").src = URL.createObjectURL(event.target.files[0])
+    }
+</script>

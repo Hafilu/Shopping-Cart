@@ -1,0 +1,140 @@
+<section>
+    <div class="container mt-4">
+    <h3 class="mb-3">Order Placement</h3>
+    <form action="" id="checkout-form">
+        <!-- Address Section -->
+        <div class="mb-3">
+            <label for="address" class="form-label">Delivery Address</label>
+            <textarea class="form-control" id="address" name="address" rows="2" required></textarea>
+            <label for="pincode" class="form-label">Pincode</label>
+            <input type="text" name="pin" id="pincode" class="form-control">
+            <label for="mobile" class="form-label">Mobile</label>
+            <input type="number" name="phone" class="form-control" id="mobile">
+            <input type="text" name="userId" value="{{user._id}}" hidden>
+            
+        </div>
+
+        <!-- Payment Method Section -->
+        <div class="mb-3">
+            <h5 class="form-label">Total Amount: <span>Rs. {{cartAmount}}</span>
+            </h5>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="paymentMethod" id="razorpay" value="razorpay" required>
+                <label class="form-check-label" for="razorpay">
+                    Online Payment
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="paymentMethod" id="cashOnDelivery" value="cashOnDelivery" required checked>
+                <label class="form-check-label" for="cashOnDelivery">
+                    Cash on Delivery
+                </label>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-success">Place Order</button>
+    </form>
+</div>
+</section>
+
+<script>
+    $("#checkout-form").submit((e) => {
+        e.preventDefault();
+        $.ajax({
+            url: "/place-order",
+            method: "post",
+            data: $("#checkout-form").serialize(),
+            success: (response) => {
+                if (response.status === "placed") {
+                    // Redirect to the order-summary page
+                    window.location.href = "/order-summary";
+                } else {
+                    // Handle the case when the order is not placed
+                    alert("Order pending for payment.");
+                    // You can also handle other actions here, such as displaying an error message or resetting the form.
+                    // Initiate the Razorpay payment flow here
+                    initiateRazorpayPayment(response);
+                }
+            },
+            error: (error) => {
+                // Handle AJAX error here, if needed
+                console.error("Error placing order:", error);
+                alert("An error occurred while placing the order. Please try again later.");
+            }
+        });
+    });
+
+    // Function to initiate the Razorpay payment
+    function initiateRazorpayPayment(razorpayOrder) {
+        console.log("RESPONSE IN PAY", razorpayOrder)
+        console.log("RESPONSE amount IN PAY", razorpayOrder.razorpayOrder.amount)
+        var options = {
+            key: process.env.KEY_ID, // Replace with your Razorpay API key
+            amount: razorpayOrder.razorpayOrder.amount, // The amount to be paid in paise
+            currency: 'INR',
+            order_id: razorpayOrder.razorpayOrder.id,
+            name: 'Hf',
+            description: 'Payment for your order',
+            handler: function (response) {
+                // Handle the Razorpay success response here
+                // You can update the order status, show a success message, etc.
+                console.log('Razorpay payment success:', response);
+
+                // After successful payment, you can redirect to the order summary page
+                //window.location.href = "/order-summary";
+                // Extract the order ID and payment ID from the response
+                const orderId = razorpayOrder.razorpayOrder.receipt;
+                const paymentId = response.razorpay_payment_id;
+
+                // Call the function to verify the Razorpay payment
+                verifyRazorpayPayment(orderId, paymentId);
+            },
+            prefill: {
+                name: 'User Name',
+                email: 'user@example.com',
+                contact: '1234567890'
+            }
+        };
+
+        var rzp = new Razorpay(options);
+        rzp.on('payment.failed', function (response) {
+            // Handle the Razorpay payment failure here
+            // You can display an error message or retry the payment
+            console.error('Razorpay payment failed:', response);
+            alert('Payment failed. Please try again.');
+        });
+
+        rzp.open();
+    }
+
+
+// After successful Razorpay payment, make a request to verify the payment
+function verifyRazorpayPayment(orderId, paymentId) {
+  $.ajax({
+    url: '/verifypayment',
+    method: 'post',
+    data: { order_id: orderId, payment_id: paymentId },
+    success: (response) => {
+      if (response.success) {
+        // Payment was successfully verified
+        // You can update the order status, show a success message, etc.
+        console.log('Razorpay payment successfully verified');
+        // Redirect to the order summary page or perform other actions as needed
+        window.location.href = '/order-summary';
+      } else {
+        // Payment verification failed
+        console.error('Razorpay payment verification failed');
+        alert('Payment verification failed. Please contact support.');
+        // Handle the failure and display an error message
+      }
+    },
+    error: (error) => {
+      // Handle AJAX error here, if needed
+      console.error('Error verifying Razorpay payment:', error);
+      alert('An error occurred while verifying the payment. Please try again later.');
+    },
+  });
+}
+
+</script>

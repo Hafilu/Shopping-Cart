@@ -1,0 +1,39 @@
+<section>
+  <div class="container mt-4">
+    <h3 class="mb-3">Your Orders</h3>
+
+    {{#if orders.length}}
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Order ID</th>
+            <th scope="col">Date</th>
+            <th scope="col">Total Amount</th>
+            <th scope="col">Payment</th>
+            <th scope="col">Status</th>
+            <th scope="col">Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each orders}}
+            <tr>
+              <td>#{{this.id}}</td>
+              <td>{{this.date}}</td>
+              <td>Rs. {{this.price}}</td>
+              <td>{{this.payment}}</td>
+              <td>{{this.status}}</td>
+              <td>
+                <a
+                  href="/order-details/{{this.id}}"
+                  class="btn btn-info btn-sm"
+                >View Details</a>
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    {{else}}
+      <p>You haven't placed any orders yet.</p>
+    {{/if}}
+  </div>
+</section>

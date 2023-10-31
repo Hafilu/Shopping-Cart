@@ -1,0 +1,76 @@
+<div class="container mt-5">
+  <h3>All Orders</h3>
+  <table class="table table-striped  table-bordered mt-3"  >
+    <thead  >
+      <tr>
+        <th>Order ID</th>
+        <th>Total Amount</th>
+        <th>Address</th>
+        <th>Pin</th>
+        <th>Phone</th>
+        <th>Payment Method</th>
+        <th>Date</th>
+        <th style="width: 215px;">Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#if orders.length}}
+      {{#each orders}}
+        <tr>
+          <td>#{{this._id}}</td>
+          <td>Rs. {{this.totalAmount}}</td>
+          <td>{{this.address}}</td>
+          <td>{{this.pin}}</td>
+          <td>{{this.phone}}</td>
+          <td>{{this.paymentMethod}}</td>
+          <td>{{this.date}}</td>
+          <td>
+            <form action="/admin/all-orders/update-status/{{this._id}}" method="POST">
+              <div class="input-group">
+                <select class="form-select" style="width: 20px;" name="status">
+                  {{#if (eq this.status "placed")}}
+                    <option value="placed" selected>Placed</option>
+                  {{else}}
+                    <option value="placed">Placed</option>
+                  {{/if}}
+
+                  {{#if (eq this.status "pending")}}
+                    <option value="pending" selected>Pending</option>
+                  {{else}}
+                    <option value="pending">Pending</option>
+                  {{/if}}
+
+                  {{#if (eq this.status "shipped")}}
+                    <option value="shipped" selected>Shipped</option>
+                  {{else}}
+                    <option value="shipped">Shipped</option>
+                  {{/if}}
+
+                  {{#if (eq this.status "delivered")}}
+                    <option value="delivered" selected>Delivered</option>
+                  {{else}}
+                    <option value="delivered">Delivered</option>
+                  {{/if}}
+
+                  <!-- Add more options for different statuses if needed -->
+                </select>
+                <button type="submit" class="btn btn-success">Update</button>
+              </div>
+            </form>
+          </td>
+          <td>
+            <form action="/admin/all-orders/delete/{{this._id}}" method="POST">
+              <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete {{this._id}}')">Delete</button>
+            </form>
+          </td>
+        </tr>
+      {{/each}}
+       {{else}}
+          <tr>
+            <td colspan="9">No orders available.</td>
+          </tr>
+        {{/if}}
+    </tbody>
+  </table>
+</div>

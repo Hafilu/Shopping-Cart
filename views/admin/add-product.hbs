@@ -1,0 +1,55 @@
+<div class="container">
+  <div class="row mt-4">
+    <h3 class="mb-3">Add Product</h3>
+
+    <form action="/admin/add-product" method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+      <label for="formGroupExampleInput" class="form-label">Name</label>
+      <input
+        type="text"
+        class="form-control"
+        name="name"
+        id="formGroupExampleInput"
+        placeholder=""
+      />
+    </div>
+    <div class="mb-3">
+      <label for="formGroupExampleInput2" class="form-label">Category</label>
+      <input
+        type="text"
+        class="form-control"
+        name="category"
+        id="formGroupExampleInput2"
+        placeholder=""
+      />
+    </div>
+    <div class="mb-3">
+      <label for="formGroupExampleInput2" class="form-label">Price</label>
+      <input
+        type="text"
+        class="form-control"
+        name="price"
+        id="formGroupExampleInput2"
+        placeholder=""
+      />
+    </div>
+    <div class="mb-3">
+      <label for="formGroupExampleInput2" class="form-label">Description</label>
+      <input
+        type="text"
+        class="form-control"
+        name="description"
+        id="formGroupExampleInput2"
+        placeholder=""
+      />
+    </div>
+    <div class="mb-3">
+      <label for="formFile" class="form-label">Image</label>
+      <input class="form-control" type="file" name="image" id="formFile" />
+    </div>
+    <div class="mb-3">
+      <button type="submit" class="btn btn-success mb-3">Submit</button>
+    </div>
+    </form>
+  </div>
+</div>

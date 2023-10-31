@@ -1,0 +1,61 @@
+<section>
+  <div class="container">
+    <h3 class="mt-5">All Users</h3>
+    <table class="table mt-3 cart-table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th scope="col">User Id</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#if users.length}}
+          {{#each users}}
+            <tr>
+              <td>{{this._id}}</td>
+              <td>{{this.name}}</td>
+              <td>{{this.email}}</td>
+              <td>
+                <button
+                  class="btn btn-danger"
+                  onclick="removeFromUser('{{this._id}}')"
+                  data-product-id="{{this._id}}"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          {{/each}}
+        {{else}}
+          <tr>
+            <td colspan="5">No users.</td>
+          </tr>
+        {{/if}}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<script>
+    function removeFromUser(userId) {
+    const confirmed = confirm('Are you sure you want to remove this user?');
+    if (confirmed) {
+    $.ajax({
+    url: '/admin/remove-from-user',
+    method: 'post',
+    data: { userId },
+    success: function (response) {
+      if (response.success) {
+        alert("User removed")
+        location.reload(); // For example, you can reload the page to reflect the updated cart
+      } else {
+        // Handle the case where removal failed
+        console.error('Failed to remove user.');
+      }
+    },
+  });}
+}
+
+</script>

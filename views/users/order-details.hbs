@@ -1,0 +1,31 @@
+<section>
+  <div class="container mt-4">
+    <!-- Full-width card for address information -->
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Shipping Address</h5>
+        <p class="card-text">Address: {{order.address}}</p>
+        <p class="card-text">Phone: {{order.phone}}</p>
+        <p class="card-text">Pin: {{order.pin}}</p>
+        <!-- Add other order details here -->
+      </div>
+    </div>
+
+    <!-- Grid of product cards -->
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+      {{#each orderDetails}}
+      <div class="col">
+        <div class="card" style="width: 14rem; height: 22rem;">
+          <img src="/product-images/{{this.id}}.jpg" class="card-img-top"  style="height: 13rem;" alt="{{name}}" />
+          <div class="card-body">
+            <h5 class="card-title">{{this.name}}</h5>
+            <p class="card-text">Price: Rs. {{this.price}}</p>
+            <p class="card-text">Quantity: {{this.quantity}}</p>
+            <!-- Add other product details here -->
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</section>
