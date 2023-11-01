@@ -16,7 +16,7 @@ This is a web application for managing an online shopping cart with both user an
   - Add, edit, and delete products
   - Manage users
   - Manage orders and update their status
-  - 
+    
 ## User Side
 
 ### User login
