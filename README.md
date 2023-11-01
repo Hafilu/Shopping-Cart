@@ -20,22 +20,22 @@ This is a web application for managing an online shopping cart with both user an
 -User Side
 
 ### User login
-![User login](screenshots/user login.PNG)
+![User login](screenshots/user-login.PNG)
 
 ### User sign up
-![User login](screenshots/sign up.PNG)
+![User login](screenshots/sign-up.PNG)
 
 ### View products
-![view products](screenshots/view products.PNG)
+![view products](screenshots/view-products.PNG)
 
 ### Cart
 ![cart](screenshots/cart.PNG)
 
 ### Place order
-![place order](screenshots/place order.PNG)
+![place order](screenshots/place-order.PNG)
 
 ### Online payment
-![online](screenshots/ONLINE PAYMENT.PNG)
+![online](screenshots/ONLINE-PAYMENT.PNG)
 
 ### Order summary
 ![placed](screenshots/placed.PNG)
@@ -44,27 +44,27 @@ This is a web application for managing an online shopping cart with both user an
 ![orders](screenshots/orders.PNG)
 
 ### Order details
-![order details](screenshots/order details.PNG)
+![order details](screenshots/order-details.PNG)
 
 ### View products
-![view products](screenshots/view products.PNG)
+![view products](screenshots/view-products.PNG)
 
 -Admin Side
 
 ### Product list
-![products](screenshots/admin product list.PNG)
+![products](screenshots/admin-product-list.PNG)
 
 ### Add products
-![add products](screenshots/add product.PNG)
+![add products](screenshots/add-product.PNG)
 
 ### Edit products
-![edit products](screenshots/edit product.PNG)
+![edit products](screenshots/edit-product.PNG)
 
 ### All orders
-![all orders](screenshots/all orders.PNG)
+![all orders](screenshots/all-orders.PNG)
 
 ### All users
-![users](screenshots/all users.PNG)
+![users](screenshots/all-users.PNG)
 
 ## Installation
 
@@ -84,7 +84,7 @@ This is a web application for managing an online shopping cart with both user an
 Create a .env file in the root directory.
 Add the environment variables and configure them as needed
 
-  npm start
+   npm start
 
 The application should now be running on http://localhost:3000.
 
