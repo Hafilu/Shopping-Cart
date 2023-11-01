@@ -46,13 +46,13 @@ This is a web application for managing an online shopping cart with both user an
 ### Order details
 ![order details](screenshots/order-details.PNG)
 
-### View products
-![view products](screenshots/view-products.PNG)
-
 ## Admin Side
 
 ### Product list
 ![products](screenshots/admin-product-list.PNG)
+
+### Search product
+![searching](screenshots/searching.PNG)
 
 ### Add products
 ![add products](screenshots/add-product.PNG)
@@ -61,7 +61,7 @@ This is a web application for managing an online shopping cart with both user an
 ![edit products](screenshots/edit-product.PNG)
 
 ### All orders
-![all orders](screenshots/all-orders.PNG)
+![all orders](screenshots/all-orders.png)
 
 ### All users
 ![users](screenshots/all-users.PNG)
