@@ -17,7 +17,7 @@ This is a web application for managing an online shopping cart with both user an
   - Manage users
   - Manage orders and update their status
   - 
--User Side
+## User Side
 
 ### User login
 ![User login](screenshots/user-login.PNG)
@@ -49,7 +49,7 @@ This is a web application for managing an online shopping cart with both user an
 ### View products
 ![view products](screenshots/view-products.PNG)
 
--Admin Side
+## Admin Side
 
 ### Product list
 ![products](screenshots/admin-product-list.PNG)
